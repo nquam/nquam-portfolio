@@ -1,0 +1,136 @@
+<html>
+
+<head>
+<title>Tools- Debt Payoff Calculator</title>
+
+<script src="debt_payoff_calc.js">
+</script>
+<script src="common.js">
+</script>
+<style>
+	.main{font-family:Verdana;font-size:11px}
+	.main_table{font-family:Verdana;font-size:12px}
+	.header{font-size:18px;font-weight:700}
+	.input_wide{width:100px;border:1px solid #c0c0c0;padding:2px}
+	.input_thin{width:60px;border:1px solid #c0c0c0;padding:2px}
+	.result{border:1px solid #c0c0c0;width:100px;padding-left:3px;font-family:arial}
+	.result_txt{font-weight:600;}
+	.am_table{font-size:9px;text-decoration:underline;font-family:Arial}
+	.am_table_f_head{text-align:right;font-weight:500;padding:3px;background:#ccc}
+	.am_table_f_std{text-align:right;padding:3px;}
+	.am_table_head{text-align:center;padding:3px;background:#ccc}
+	.am_table_std{text-align:center;padding:3px;}
+	.calc{font-weight:700;color:#297c08}
+	.tdleft{height:30px;width:200px}
+	.tdmiddle{text-align:right;width:15px}
+	.tdright{width:230px}
+</style>
+	
+</head>
+
+<body onLoad="makeselect()">
+	<form name="clc">
+		<div class="main" align="left">
+			<div class="header">Debt Payoff calculator</div><br /><br />
+			<div class="calc">See how quickly you can afford to pay off your loan.</div><br /><br />
+			<div>These values are only estimates.</div>
+			<br />
+			<table class="main_table" width="450px" border="0" cellspacing="0" cellpadding="3">
+				<tr>
+					<td class="tdleft">
+						<div id="balance_txt">Principle Balance Owed:</div>
+					</td>
+					<td class="tdmiddle">
+						$
+					</td>
+					<td class="tdright">
+						<input name="balance" class="input_wide" value="200000.00">
+					</td>
+				</tr>
+				<tr>
+					<td class="tdleft">
+						<div id="rate_txt">Annual Interest Rate :</div>
+					</td>
+					<td class="tdmiddle">
+					</td>
+					<td>
+						<input name="rate" class="input_thin" value="7"> % Annual
+					</td>
+				</tr>
+				<tr>
+					<td class="tdleft">
+						<div id="payoff_txt">Payoff Goal M/Y:</div>
+					</td>
+					<td class="tdmiddle">
+					</td>
+					<td>
+						<span>
+						<select name="selmonth">
+							<option value=1>January</option>
+							<option value=2>February</option>
+							<option value=3>March</option>
+							<option value=4>April</option>
+							<option value=5>May</option>
+							<option value=6>June</option>
+							<option value=7>July</option>
+							<option value=8>August</option>
+							<option value=9>September</option>
+							<option value=10>October</option>
+							<option value=11>November</option>
+							<option value=12>December</option>
+						</select>
+						</span>
+						<span id="syear"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td class="tdmiddle">
+					</td>
+					<td>
+						<input type="BUTTON" value="Calculate" onClick="dosum()" name="BUTTON">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td class="result_txt">
+						Monthly Payment Required:
+					</td>
+					<td class="tdmiddle">$
+					</td>
+					<td>
+						<div id="monthly_goal" class="result">0</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="result_txt">
+						Number of payments:
+					</td>
+					<td class="tdmiddle">
+						$
+					</td>
+					<td>
+						<div id="payments" class="result">0</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="result_txt">
+						Total Interest:
+					</td>
+					<td class="tdmiddle">$
+					</td>
+					<td>
+						<div id="interest" class="result">0</div>
+					</td>
+				</tr>
+			</table>
+		</div><br />
+		<div id="info"></div>
+	</form>
+</body>
+</html>
