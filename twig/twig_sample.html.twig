@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js">
+    <!--<![endif]-->
+    {% block head %}
+        <!-- BEGIN HEAD -->
+        <head>
+            <meta charset="utf-8"/>
+
+            <title>{% block pagetitle %} Admin Dashboard {% endblock %}</title>
+
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+            <meta content="" name="description"/>
+            <meta content="" name="author"/>
+            <!-- BEGIN GLOBAL MANDATORY STYLES -->
+            <link href="{{ asset('template/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css"/>
+            <link href="{{ asset('template/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css"/>
+            <link href="{{ asset('template/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+            <link href="{{ asset('template/global/plugins/uniform/css/uniform.default.min.css') }}" rel="stylesheet" type="text/css"/>
+            <!-- END GLOBAL MANDATORY STYLES -->
+            {% block pagestylesheets %}
+                <!-- stylesheets for this page only -->
+            {% endblock %}
+            <!-- BEGIN THEME STYLES -->
+            <link href="{{ asset('template/global/css/components.css') }}" rel="stylesheet" type="text/css"/>
+            <link href="{{ asset('template/global/css/plugins.css') }}" rel="stylesheet" type="text/css"/>
+            <link href="{{ asset('template/admin/layout/css/layout.css') }}" rel="stylesheet" type="text/css"/>
+            <link id="style_color" href="{{ asset('template/admin/layout/css/themes/xxxx.css') }}" rel="stylesheet" type="text/css"/>
+            <link href="{{ asset('template/global/plugins/bootstrap-toastr/toastr.min.css') }}" rel="stylesheet" type="text/css"/>
+            <!-- END THEME STYLES -->
+            <!-- link rel="shortcut icon" href="favicon.ico"/ -->
+            <link href="{{ asset('template/admin/layout/css/custom.css') }}" rel="stylesheet" type="text/css"/>
+            {% block stylesheets %}{% endblock %}
+            {% block headjavascripts %}{% endblock %}
+        </head>
+    {% endblock %}
+
+    {% block body %}
+        <body class="page-header-fixed page-sidebar-fixed page-sidebar-closed-hide-logo">
+            {% block page %}
+                {% block pageheader %}
+
+                {% endblock %}
+                <div class="page-container">
+                    {% block pagesidebar %}
+
+                    {% endblock %}
+                    <div class="page-content-wrapper">
+                        <div class="page-content">
+                            <div id="data-page-content" class="collapse">
+                                {% block pagecontent %}
+                                    <!-- all page content -->
+                                {% endblock %}
+                            </div>
+                            <div id="data-page-contentOrg" class="collapse"></div>
+                            <div class="clearfix"></div>
+                            <!-- END PAGE CONTENT-->
+                        </div>
+                    </div>
+                    <!-- END CONTENT -->
+                </div>
+                {% block pagefooter %}
+                {% endblock %}
+            {% endblock %}
+            <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+            <!-- BEGIN CORE PLUGINS -->
+            <!--[if lt IE 9]>
+            <script src="{{ asset('template/global/plugins/respond.min.js') }}"></script>
+            <script src="{{ asset('template/global/plugins/excanvas.min.js') }}"></script>
+            <![endif]-->
+            {% javascripts
+                '@xxxx/Resources/public/template/global/plugins/jquery-1.11.0.min.js'
+                '@xxxx/Resources/public/template/global/plugins/jquery-migrate-1.2.1.min.js'
+                '@xxxx/Resources/public/template/global/plugins/bootstrap/js/bootstrap.min.js'
+                '@xxxx/Resources/public/template/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js'
+                '@xxxx/Resources/public/template/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js'
+                '@xxxx/Resources/public/template/global/plugins/jquery.cokie.min.js'
+                '@xxxx/Resources/public/template/global/plugins/uniform/jquery.uniform.js'
+            %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+            <!-- END CORE PLUGINS -->
+            {% block pagejavascripts %}
+                <!-- PAGE LEVEL PLUGINS -->
+            {% endblock %}
+            {% block closingpagescripts %}
+                {% javascripts
+                    '@xxxx/Resources/public/template/global/plugins/bootstrap-toastr/toastr.min.js'
+                    '@xxxx/Resources/public/template/global/plugins/jquery.blockui.min.js'
+                    '@xxxx/Resources/public/template/admin/layout/scripts/layout_custom.js' %}
+                    <script src="{{ asset_url }}"></script>
+                {% endjavascripts %}
+                <script>
+
+
+
+                        Metronic.init(); // init metronic core components
+                        Layout.init(); // init current layout
+
+                    function notify(type, title, text, time){
+                        if(time == 'undefined' || time == null){
+                            time = 10000;
+                        }
+
+                        toastr.options = {
+                            showDuration: 500,
+                            hideDuration: 500,
+                            timeOut: time,
+                            extendedTimeOut: 1000,
+                            showEasing:"swing",
+                            hideEasing:"linear",
+                            showMethod:"fadeIn",
+                            hideMethod:"fadeOut",
+                            closeButton: true,
+                            debug: false,
+                            positionClass: 'toast-top-right',
+                            onclick: null
+                        };
+
+                        var $toast = toastr[type](text, title);
+                    }
+
+                    function apiResponseCheck(mSuccess, mErr, response, time){
+                        if(response != 'undefined' && response != null){
+                            if(time == 'undefined' || time == null){
+                                time = 10000;
+                            }
+                            if(response.errors != 'undefined' && response.errors != null){
+                                if(response.errors[0].code == 143500){
+                                    notify("warning", "Notice", response.errors[0].message, time);
+                                }else{
+                                    notify("error", "Error "+response.errors[0].code, mErr+': '+response.errors[0].message, time);
+                                }
+                                return false;
+                            }else{
+                                if(response.data.text != 'undefined' && response.data.text != null){
+                                    notify("success", "Successful", mSuccess+": "+response.data.text, time);
+                                    return true;
+                                }
+                                if(response.data.ipadlabel != 'undefined' && response.data.ipadlabel != null){
+                                    notify("success", "Successful", mSuccess+": "+response.data.ipadlabel, time);
+                                    return true;
+                                }
+                                if(response.data[0].ipadlabel != 'undefined' && response.data[0].ipadlabel != null){
+                                    notify("success", "Successful", mSuccess+": "+response.data[0].ipadlabel, time);
+                                    return true;
+                                }
+
+                            }
+                        }else{
+                            notific8("error", "Error", "There was no response from the server", time);
+                        }
+                    }
+                </script>
+
+            {% endblock %}
+            {% block javascripts %}{% endblock %}
+            <!-- END JAVASCRIPTS -->
+        </body>
+        {% block overrideCSS %}
+        {% endblock %}
+    {% endblock %}
+
+</html>

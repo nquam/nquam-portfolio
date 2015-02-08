@@ -1,0 +1,529 @@
+<h3 class="page-title">Member Management</h3>
+
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+        <span href="#" class="breadcrumb-org">{{ orgname }}</span>
+    </li>
+</ul>
+<div class="row">
+    <div id="content-adjustable" class="col-md-12">
+        <div class="portlet box grey-gallery">
+            <div class="portlet-title">
+                <div class="caption">
+                    Member List
+                </div>
+                <div class="actions">
+                    <a data-toggle="modal" href="#new-member" class="btn new-member btn-default btn-sm">
+                        <i class="fa fa-plus"></i> Add Member </a>
+                </div>
+            </div>
+            <div id="member-list" class="portlet-body blockui-height">
+            </div>
+        </div>
+    </div>
+    {% include 'xxxx:Base:infopanel.html.twig' %}
+</div>
+
+
+<div id="new-member" class="modal fade in" tabindex="-1" aria-hidden="false" data-backdrop="static" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 blockui-height">
+                        <form id="new-member-modal" class="form-horizontal" role="form" onSubmit="return false;">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default cancel">Cancel</button>
+                <button type="button" data-dismiss="modal" class="btn green">Save Member</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="data-member-list-template">
+    <% if(_.size(data) > 0){ %>
+        <table class="table table-striped table-bordered table-hover" id="member-list">
+            <thead>
+            <tr>
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Last Name
+                </th>
+                <th>
+                    Emp#
+                </th>
+                <th>
+                    Description
+                </th>
+                <th width="5%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% _.each(data, function(member) { %>
+            <tr class="odd gradeX">
+                <td>
+                    <a href="#" class="detail" ref="<%= member.memberid %>"><%= member.firstname %></a>
+                </td>
+                <td>
+                    <%= member.lastname %>
+                </td>
+                <td>
+                    <%= member.jerseynumber %>
+                </td>
+                <td>
+                    <%= member.description %>
+                </td>
+                <td width="5%">
+                    <div class="actions col-md-1">
+                        <a href="#new-member" data-toggle="modal" class="edit-member" ref="<%= member.memberid %>">
+                            <i class="fa fa-pencil"></i></a>
+                    </div>
+                </td>
+            </tr>
+            <% }); %>
+            </tbody>
+        </table>
+
+    <% }else{ %>
+        There are no members assigned to this organization
+    <% } %>
+
+</script>
+
+    <script type="text/template" id="data-member-edit-template">
+        <div class="col-md-12">
+            <div class="alert alert-danger display-hide" style="display:none;">
+                <button class="close" data-close="alert"></button>
+                The following fields have errors: <span class="errlist"></span>
+            </div>
+            <ul class="nav nav-tabs">
+                <li rel="tab_1_1" class="active">
+                    <a href="#tab_1_1" data-toggle="tab">
+                        User Info </a>
+                </li>
+                <li rel="tab_1_2">
+                    <a href="#tab_1_2" data-toggle="tab">
+                        Server Info </a>
+                </li>
+                <li rel="tab_1_3">
+                    <a href="#tab_1_3" data-toggle="tab">
+                        Cellular</a>
+                </li>
+                <li rel="tab_1_4">
+                    <a href="#tab_1_4" data-toggle="tab">
+                        Modules</a>
+                </li>
+                <!--<li>-->
+                    <!--<a href="#tab_1_5" data-toggle="tab">-->
+                        <!--Travel</a>-->
+                <!--</li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane form-body active" id="tab_1_1">
+                    <div class="col-md-8 no-space">
+                        <div class="form-group col-md-12">
+                            <label class="control-label">First Name <span class="required" aria-required="true">*</span></label>
+                            <input type="text" class="form-control" name="firstname" placeholder="First Name" value="<%= member.get('firstname') %>">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Last Name <span class="required" aria-required="true">*</span></label>
+                            <input type="text" class="form-control" name="lastname" placeholder="Last Name" value="<%= member.get('lastname') %>">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Email Address</label>
+                            <input type="text" class="form-control email-mask" name="email" placeholder="Email Address" value="<%= member.get('email') %>">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Login <span class="required" aria-required="true">*</span></label>
+                            <input type="text" class="form-control" name="member" placeholder="Login" value="<%= member.get('member') %>">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="col-md-4 no-space">
+                        <div class="form-group col-md-12">
+                            <label>Role</label>
+                            <select class="form-control" name="role">
+                                <option selected="" value="">Select Role</option>
+                                {% for role in roleList %}
+                                    <option id="role_{{ role['id'] }}" value="{{ role['id'] }}"<% if (member.get('role') != 'undefined' && member.get('role') != null){ if (member.get('role').rolename == '{{ role['rolename'] }}') { %> selected <% }} %>>{{ role['rolename'] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Member Type</label>
+                            <select class="form-control" name="membertype">
+                                <option selected="" value="">Select Member Type</option>
+                                {% for mType in memberType %}
+                                    <option id="mType_{{ mType['type'] }}" value="{{ mType['type'] }}"<% if (member.get('membertype') != 'undefined' && member.get('membertype') != null){ if (member.get('membertype').type == '{{ mType['type'] }}') { %> selected <% }} %>>{{ mType['type'] }}{% if myType['description'] is defined %} - {{ mType['description'] }}{% endif %}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label>Description</label>
+                            <input type="text" class="form-control" name="description" placeholder="Description" value="<%= member.get('description') %>">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Emp #</label>
+                            <input type="text" class="form-control" name="jerseynumber" placeholder="Emp #" value="<%= member.get('jerseynumber') %>">
+                        </div>
+                        <div class="checkbox-list col-md-12">
+                            <label>
+                                <input name="forcepasswordchange" type="checkbox" <% if (member.get('forcepasswordchange')){ %>CHECKED<% } %> value="1">
+                                Force Password Change
+                            </label>
+                            <label>
+                                <input name="overridelogin" type="checkbox" <% if (member.get('overridelogin')){ %>CHECKED<% } %> value="1">
+                                Allow Login Override
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="tab-pane form-body" id="tab_1_2">
+                    <div class="col-md-6 no-space">
+                        <div class="checkbox-list col-md-12 no-space">
+                            <label>
+                                <input type="checkbox" name="allowbgprocess" <% if (member.get('allowbgprocess')){ %>CHECKED<% } %> value="1">
+                                Allow Background Downloads
+                            </label>
+                            <label>
+                                <input name="allowannotationshare" type="checkbox" <% if (member.get('allowannotationshare')){ %>CHECKED<% } %> value="1">
+                                Allow Annotation Sharing
+                            </label>
+                        </div>
+                        <div class="form-group col-md-12 margin-top-10">
+                            <label>Simultaneous Downloads</label>
+                            <select class="form-control" name="simdownloads">
+                                <option selected="" value=""></option>
+                                {% for i in 1..10 %}
+                                    <option value="{{ i }}"<% if (member.get('simdownloads') == {{ i }}){ %> selected <% } %>>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Application Update</label>
+                            <select name="appupdate" class="form-control">
+                                <option id="appup_none" value="none"<% if (member.get('appupdate').appupdateenabled == 'none'){ %> selected <% } %>>None</option>
+                                <option id="appup_check" value="check"<% if (member.get('appupdate').appupdateenabled == 'check'){ %> selected <% } %>>Check</option>
+                                <option id="appup_force" value="force"<% if (member.get('appupdate').appupdateenabled == 'force'){ %> selected <% } %>>Force</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Failed Login Attempts</label>
+                            <select class="form-control" name="failedloginswipe">
+                                <option selected="" value=""></option>
+                                {% for i in 1..10 %}
+                                    <option value="{{ i }}"<% if (member.get('failedloginswipe') == {{ i }}){ %> selected <% } %>>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 no-space">
+                        <div class="form-group col-lg-12 time-control">
+                            <label class="control-label">Time to Lock <span class="required" aria-required="true">*</span></label>
+                            <div class="input-group margin-top-10 col-lg-12">
+                                <span class="col-lg-6 no-space">
+                                    <input type="text" class="form-control time-mask" name="ttllockout" value="<%= convertTimeForDisplay(member.get('ttllockout')) %>">
+                                </span>
+                                <span class="col-lg-6">
+                                    <select class="form-control time-drop" ref="d" name="ttllockout_time">
+                                        <option value="d">day(s)</option>
+                                        <option value="h" <% if(member.get('ttllockout') >= 60 && member.get('ttllockout') < 1440){ %>SELECTED<% } %>>hour(s)</option>
+                                        <option value="m" <% if(member.get('ttllockout') < 60){ %>SELECTED<% } %>>minute(s)</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-12 time-control">
+                            <label class="control-label">Time to Wipe <span class="required" aria-required="true">*</span></label>
+                            <div class="input-group margin-top-10 col-lg-12">
+                                <span class="col-lg-6 no-space">
+                                    <input type="text" class="form-control time-mask" name="ttlwipe" value="<%= convertTimeForDisplay(member.get('ttlwipe')) %>">
+                                </span>
+                                <span class="col-lg-6">
+                                    <select class="form-control time-drop" ref="d" name="ttlwipe_time">
+                                        <option value="d">day(s)</option>
+                                        <option value="h" <% if(member.get('ttlwipe') >= 60 && member.get('ttlwipe') < 1440){ %>SELECTED<% } %>>hour(s)</option>
+                                        <option value="m" <% if(member.get('ttlwipe') < 60){ %>SELECTED<% } %>>minute(s)</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-12 time-control">
+                            <label>Session Timeout</label>
+                            <div class="input-group margin-top-10 col-lg-12">
+                                <span class="col-lg-6 no-space">
+                                    <input type="text" class="form-control time-mask" name="timetolock" value="<%= convertTimeForDisplay(member.get('timetolock')) %>">
+                                </span>
+                                <span class="col-lg-6">
+                                    <select class="form-control time-drop" ref="d" name="timetolock_time">
+                                        <option value="d">day(s)</option>
+                                        <option value="h" <% if(member.get('timetolock') >= 60 && member.get('timetolock') < 1440){ %>SELECTED<% } %>>hour(s)</option>
+                                        <option value="m" <% if(member.get('timetolock') < 60){ %>SELECTED<% } %>>minute(s)</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <a href="#">iPad Version Manager</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="tab-pane form-body" id="tab_1_3">
+                    <div class="col-md-12 col-lg-6">
+                        <div class="form-group col-md-12">
+                            <label>Mobile Phone</label>
+                            <input type="text" class="form-control" name="mobilephone" value="<%= member.get('mobilephone') %>">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Mobile Phone Carrier</label>
+                            <input type="text" class="form-control" name="carriername" value="<%= member.get('carriername') %>">
+                        </div>
+                    </div>
+                    <div class="checkbox-list col-md-12 col-lg-6">
+                        <label>
+                            <input type="checkbox" <% if (member.get('')){ %>CHECKED<% } %> value="1">
+                            Refresh Mobile Carrier
+                        </label>
+                        <label>
+                            <input type="checkbox" name="cellenabled" <% if (member.get('cellenabled')){ %>CHECKED<% } %> value="1">
+                            Enable Cellular
+                        </label>
+                        <label>
+                            <input type="checkbox" name="cellcol1name" <% if (member.get('cellcol1name')){ %>CHECKED<% } %> value="1">
+                            Allow Notifications over Cellular
+                        </label>
+                        <label>
+                            <input type="checkbox" name="cellmessaging" <% if (member.get('cellmessaging')){ %>CHECKED<% } %> value="1">
+                            Allow Messaging over Cellular
+                        </label>
+                        <label>
+                            <input type="checkbox" name="cellcol2name" <% if (member.get('cellcol2name')){ %>CHECKED<% } %> value="1">
+                            Allow Documents over Cellular
+                        </label>
+                        <label>
+                            <input type="checkbox" name="cellcol3name" <% if (member.get('cellcol3name')){ %>CHECKED<% } %> value="1">
+                            Allow GameFilm over Cellular
+                        </label>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="tab-pane form-body" id="tab_1_4">
+                    <div class="checkbox-list col-md-12">
+                        <label>
+                            <input type="checkbox" name="calendarenabled" <% if (member.get('calendarenabled')){ %>CHECKED<% } %> value="1">
+                            Calendar
+                        </label>
+                        <label>
+                            <input type="checkbox" name="messagesenabled" <% if (member.get('messagesenabled')){ %>CHECKED<% } %> value="1">
+                            Message
+                        </label>
+                        <label>
+                            <input type="checkbox" name="coachxxxxenabled" <% if (member.get('coachxxxxenabled')){ %>CHECKED<% } %> value="1">
+                            Coach
+                        </label>
+                        <label>
+                            <input type="checkbox" name="myvideoenabled" <% if (member.get('myvideoenabled')){ %>CHECKED<% } %> value="1">
+                            MyVideo
+                        </label>
+                        <label>
+                            <input type="checkbox" name="intranetenabled" <% if (member.get('intranetenabled')){ %>CHECKED<% } %> value="1">
+                            Intranet
+                        </label>
+                        <label>
+                            <input type="checkbox" name="scoutingxxxxenabled" <% if (member.get('scoutingxxxxenabled')){ %>CHECKED<% } %> value="1">
+                            Self-Serve Video
+                        </label>
+                        <label>
+                            <input type="checkbox" name="dashboardenabled" <% if (member.get('dashboardenabled')){ %>CHECKED<% } %> value="1">
+                            Dashboard
+                        </label>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="tab-pane form-body" id="tab_1_5">
+                    <div class="form-group col-md-12">
+                        <label>Active</label>
+                        <select class="form-control" name="travel">
+                            <option value="0"<% if (!member.get('travel')){ %> selected <% } %>>Off</option>
+                            <option value="1"<% if (member.get('travel')){ %> selected <% } %>>On</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>Download Priority Group</label>
+                        <select class="form-control" name="prioritygroup">
+                            <option selected="" value="10">Select Priority</option>
+                                {% for priority in priorityList %}
+                                    <option id="pri_{{ priority['priority'] }}" name="{{ priority['groupname'] }}" value="{{ priority['priority'] }}"<% if (member.get('prioritygroup') != 'undefined' && member.get('prioritygroup') != null){ if (member.get('prioritygroup').priority == {{ priority['priority'] }}){ %> selected <% }} %>>{{ priority['priority'] }} - {{ priority['groupname'] }}</option>
+                                {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>File Life on iPad</label>
+                        <input type="text" class="form-control" name="ttllocalfile" value="<%= member.get('ttllocalfile') %>">
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+        </div>
+
+    </script>
+
+<script type="text/template" id="data-template-info-panel-member-p">
+    <% if(_.size(members) > 0){ %>
+    <table class="table table-condensed table-hover">
+        <thead>
+        <th>Login</th>
+        <th>Name</th>
+        </thead>
+        <tbody>
+        <% _.each(members, function(member) { %>
+        <tr>
+            <td>
+                <%= member.member %>
+            </td>
+            <td>
+                <%= member.firstname %> <%= member.lastname %>
+            </td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
+    <% }else{ %>
+    No members assigned
+    <% } %>
+</script>
+
+<script type="text/template" id="data-template-info-panel-member">
+    <div class="heading bg-grey-gallery">
+        <div class="col-md-1">
+            <span aria-hidden="true" class="icon-login" onClick="clearInfoPanel()"></span>
+        </div>
+        <div class="col-md-10">
+            <h3>Member Details</h3>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="portlet box grey-silver">
+        <div class="portlet-title">
+            <div class="tools col-md-1">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+            <div class="col-md-10 caption">
+                Properties
+            </div>
+            <div class="actions col-md-1">
+                <a href="#new-member" data-toggle="modal" class="edit-member btn btn-default btn-sm" ref="<%= member.get('memberid') %>">
+                    <i class="fa fa-pencil"></i></a>
+            </div>
+        </div>
+        <div class="portlet-body" style="display: block;">
+            <table class="table table-condensed table-hover">
+                <tr>
+                    <td>First Name:</td>
+                    <td><%= member.get('firstname') %></td>
+                </tr>
+                <tr>
+                    <td>Last Name:</td>
+                    <td><%= member.get('lastname') %></td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td><%= member.get('description') %></td>
+                </tr>
+                <tr>
+                    <td>Login:</td>
+                    <td><%= member.get('member') %></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td><%= member.get('email') %></td>
+                </tr>
+                <tr>
+                    <td>Mobile Phone:</td>
+                    <td><%= member.get('mobilephone') %></td>
+                </tr>
+                <tr>
+                    <td>Allow Background:</td>
+                    <td><% if(member.get('allowbgprocess') == 1){ %>Yes<% }else{ %>No<% } %></td>
+                </tr>
+                <tr>
+                    <td>Simultaneous Downloads:</td>
+                    <td><%= member.get('simdownloads') %></td>
+                </tr>
+                <tr>
+                    <td>Application Update Enabled:</td>
+                    <td><%= member.get('appupdate').appupdateenabledtext %></td>
+                </tr>
+                <tr>
+                    <td>Failed Login Attempts:</td>
+                    <td><%= member.get('failedloginswipe') %></td>
+                </tr>
+                <tr>
+                    <td>Allow Annotation Sharing:</td>
+                    <td><% if(member.get('allowannotationshare') == 1){ %>Yes<% }else{ %>No<% } %></td>
+                </tr>
+                <tr>
+                    <td>Time to Lock:</td>
+                    <td><%= convertTimeForDisplay(member.get('ttllockout')) %>
+                        <% if(member.get('ttllockout') >= 1440){ %>day(s)<% } %>
+                        <% if(member.get('ttllockout') >= 60 && member.get('ttllockout') < 1440){ %>hour(s)<% } %>
+                        <% if(member.get('ttllockout') < 60){ %>minute(s)<% } %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Time to Wipe:</td>
+                    <td><%= convertTimeForDisplay(member.get('ttlwipe')) %>
+                        <% if(member.get('ttlwipe') >= 1440){ %>day(s)<% } %>
+                        <% if(member.get('ttlwipe') >= 60 && member.get('ttlwipe') < 1440){ %>hour(s)<% } %>
+                        <% if(member.get('ttlwipe') < 60){ %>minute(s)<% } %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Session Timeout:</td>
+                    <td><%= convertTimeForDisplay(member.get('timetolock')) %>
+                        <% if(member.get('timetolock') >= 1440){ %>day(s)<% } %>
+                        <% if(member.get('timetolock') >= 60 && member.get('timetolock') < 1440){ %>hour(s)<% } %>
+                        <% if(member.get('timetolock') < 60){ %>minute(s)<% } %>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+      
+</script>
+
+
+    {% include 'xxxx:Base:pagination_u.html.twig' %}
+
+    {% javascripts
+    '@xxxx/Resources/public/js/jquery.inputMask.min.js'
+    '@xxxx/Resources/public/js/underscore.js'
+    '@xxxx/Resources/public/js/backbone-min.js'
+    '@xxxx/Resources/public/js/membersApp.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}

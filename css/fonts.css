@@ -1,0 +1,169 @@
+html,body  {
+	background:#fff;
+	font:11px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	padding:0;
+	margin:0 auto;
+	color:#333;
+}
+
+form { margin: 0; }
+
+
+.main {
+	line-height:16px;
+}
+
+
+.small_title_blue {
+	color:#488fc8;
+	font-weight:bold;
+	font-size:12px;
+}
+
+
+/* FORMS **********************************************/
+.textbox, .textbox2 {
+	border:1px solid #999;
+	padding:2px;
+	margin-bottom:2px;
+	font-size:11px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	vertical-align:middle;
+}
+.textbox2 {
+	background-color:#efefef;
+}
+.textbox2:focus {
+	background-color:#fff;
+}
+.selectbox {
+	border:#999 1px solid;
+	font-size:11px;
+	margin-bottom:2px;
+	font-family:verdana;
+	vertical-align:middle;
+}
+.textarea	{
+	border:#999 1px solid;
+	font-size:10px;
+	margin-bottom:2px;
+	font-family:verdana;
+	vertical-align:middle;
+}
+.button	{
+	margin-bottom:4px;
+	font-family:verdana;
+	vertical-align:middle;
+}
+/******************************************************/
+
+p.career {
+	margin:20px 0 -6px 0;
+}
+
+.short {
+	line-height:18px !important;
+	margin-top:30px;
+}
+.short2 {
+	line-height:19px !important;
+	margin-top:22px;
+}
+h3 {
+	font-size:12px;
+	line-height:16px;
+	margin-bottom:8px;
+}
+
+.light {
+	color:#999;
+}
+.light2 {
+	color:#666;
+}
+
+.green_head {
+	position: relative;
+	top:11px;
+	left:62px;
+	color:#390;
+	font-size:14px;
+	font-weight:bold;
+	width:400px;
+}
+.green_subhead {
+	position:relative;
+	top:13px;
+	left:63px;
+	color:#68d001;
+	font-size:11px;
+	font-weight:bold;
+	width:400px;
+}
+.sm {
+	font-size:9px;
+	color:#666;
+}
+
+.error {
+	color:#900;
+	font-weight: bold;
+	line-height: 12pt;
+}
+
+
+.letters {
+	list-style-type: upper-alpha;
+	font-weight:bold;
+	line-height:20px;
+}
+
+.numbers {
+	list-style-type: decimal;
+	font-weight:bold;
+	line-height:20px;
+}
+
+
+/* BUBBLE *********************************************/
+#businessTooltip, .markerTooltip, .markerDetail {
+	color:#333;
+	background-color:#fff;
+	white-space: nowrap;
+	margin:0;
+	padding:2px 4px;
+	border:1px solid #488fc8;
+}
+/******************************************************/
+.red {color:#900;}
+
+
+a.green {
+	color:#390;
+	font-weight:bold;
+}
+a.green:hover {
+	color:#333;
+	font-weight:bold;
+}
+
+
+.tag_cloud {
+	padding:3px;
+	text-decoration:none;
+	line-height:20px;
+}
+.tag_cloud:link {
+	color:#056ca7;
+}
+.tag_cloud:visited {
+	color:#4191d8;
+}
+.tag_cloud:hover {
+	color: #ffffff;
+	background:#056ca7;
+}
+.tag_cloud:active {
+	color:#ffffff;
+	background: #056ca7;
+}
