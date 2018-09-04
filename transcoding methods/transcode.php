@@ -81,24 +81,25 @@
 			switch($method)
 			{
 				case 0:
-					// makecutup sportscode method
+					// make a cutup 1st method standard
 					$ffOptionsMpgTs = "-y -crf $quality -vcodec libx264 $audioCmdTs -preset veryfast -g 15 -bf 16 -b_strategy 1 -s 1024x576 -aspect 16:9 -pix_fmt yuv420p -threads 0 -profile:v high -level:v 4.1 -tune film -coder 1";
 					break;
 				case 1:
-					// serverlync method
+					// server method full file
 					$ffOptionsMpgTs = " -y -pix_fmt yuv420p -r 25 -threads 0 -c:v libx264 -bf 0 -g 4 -vf yadif -s 1024x576 -aspect 16:9 -preset ultrafast -acodec libvo_aacenc -ac 2 -ab 128k -crf 34 ";
 					break;
 				case 2:
-					// makecutup dvsport method
+					// make a cutup 2nd method 60fps
 					$inputFrameRate = 59.597;
 					$outputFrameRate = $inputFrameRate;//30000 / 1001;
 					$ffOptionsMpgTs = "-y -crf $quality -vcodec libx264 $audioCmdTs -preset veryfast -g 15 -bf 16 -b_strategy 1 -r $outputFrameRate -s 1024x576 -aspect 16:9 -pix_fmt yuv420p -threads 0 -profile:v high -level:v 4.1 -tune film -coder 1";
 					break;
 				case 3:
-					// no output framerate
+					// no output framerate specified
 					$ffOptionsMpgTs = "-y -crf $quality -vcodec libx264 $audioCmdTs -preset veryfast -g 15 -bf 16 -b_strategy 1 -s 1024x576 -aspect 16:9 -pix_fmt yuv420p -threads 0 -profile:v high -level:v 4.1 -tune film -coder 1";
 					break;
 				case 4:
+					// 29fps
 					$outputFrameRate = 30000 / 1001;
 					$ffOptionsMpgTs = "-y -crf $quality -vcodec libx264 $audioCmdTs -preset veryfast -g 15 -bf 16 -b_strategy 1 -r $outputFrameRate -s 1024x576 -aspect 16:9 -profile:v high -level:v 4.1 -tune film -coder 1";
 					break;
